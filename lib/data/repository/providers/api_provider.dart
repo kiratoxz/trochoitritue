@@ -7,14 +7,4 @@ class ApiProvider extends BaseService with ErrorMixin {
   static const String TAG = "ApiProvider";
 
   ApiProvider({required Dio dio}) : super(client: dio);
-
-  Future<void> getConfigData() async {
-    return protectRunApi<void>(
-      action: () async {
-        final response = await request(url: Constant.configUrl, timeout: 30000);
-        return response;
-      },
-      errorTag: TAG,
-    );
-  }
 }

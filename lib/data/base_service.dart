@@ -48,9 +48,6 @@ class BaseService {
       final response = await dioClient.request(url);
       return _validateResponse(response).data;
     } on DioException catch (error) {
-      if (error.response?.statusCode == 305) {
-        return _validateResponse(error.response!).data;
-      }
       developer.log("request - error with message: $error");
       rethrow;
     }
@@ -384,7 +381,7 @@ class BaseService {
 
   Response _validateResponse(Response response) {
     final statusCode = response.statusCode ?? 0;
-    if (statusCode == 200 || statusCode == 305) {
+    if (statusCode == 200) {
       return response;
     } else {
       final errorMessage = _retrieveErrorMessage(response);
